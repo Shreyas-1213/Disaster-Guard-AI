@@ -1,189 +1,695 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 
-	<% if(session.getAttribute("user")==null){ response.sendRedirect("login.jsp"); return; } %>
+<%
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 
-		<!DOCTYPE html>
-		<html>
+<!DOCTYPE html>
 
-		<head>
+<html>
 
-			<meta charset="UTF-8">
+<head>
 
-			<title>AI Risk Prediction | DisasterGuard AI</title>
+<meta charset="UTF-8">
 
-			<style>
-				body {
-					margin: 0;
-					font-family: Arial, sans-serif;
-					background: #0f172a;
-					color: white;
-				}
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-				.navbar {
+<title>
+AI Risk Prediction | DisasterGuard AI
+</title>
 
-					background: #111827;
-					padding: 20px 60px;
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-				}
+<style>
 
-				.logo {
+* {
+    box-sizing: border-box;
+}
 
-					font-size: 24px;
-					font-weight: bold;
-				}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+}
 
-				.logo span {
+/* ============================= */
+/* NAVBAR */
+/* ============================= */
 
-					color: #38bdf8;
-				}
+.navbar {
 
-				.container {
+    background: #111827;
 
-					width: 700px;
-					margin: 40px auto;
-					background: #1e293b;
-					padding: 40px;
-					border-radius: 12px;
-				}
+    padding: 20px 60px;
 
-				.container h1 {
+    display: flex;
 
-					text-align: center;
-					margin-bottom: 30px;
-				}
+    justify-content: space-between;
 
-				.form-group {
+    align-items: center;
 
-					margin-bottom: 20px;
-				}
+    border-bottom: 1px solid #1e293b;
+}
 
-				label {
+.logo {
 
-					display: block;
-					margin-bottom: 8px;
-				}
+    font-size: 24px;
 
-				input,
-				select {
+    font-weight: bold;
+}
 
-					width: 100%;
-					padding: 12px;
-					border: none;
-					border-radius: 6px;
-					background: #0f172a;
-					color: white;
-				}
+.logo span {
 
-				button {
+    color: #38bdf8;
+}
 
-					width: 100%;
-					padding: 15px;
-					background: #2563eb;
-					color: white;
-					border: none;
-					border-radius: 6px;
-					font-size: 18px;
-					cursor: pointer;
-				}
+.back-button {
 
-				button:hover {
+    text-decoration: none;
 
-					background: #1d4ed8;
-				}
-			</style>
+    color: white;
 
-		</head>
+    background: #2563eb;
 
-		<body>
+    padding: 10px 18px;
 
-			<div class="navbar">
+    border-radius: 6px;
+}
 
-				<div class="logo">
+.back-button:hover {
 
-					DisasterGuard <span>AI</span>
+    background: #1d4ed8;
+}
 
-				</div>
 
-			</div>
+/* ============================= */
+/* PAGE CONTAINER */
+/* ============================= */
 
-			<div class="container">
+.page-container {
 
-				<h1>AI Disaster Risk Prediction</h1>
+    width: 90%;
 
-				<form action="PredictionServlet" method="post">
+    max-width: 950px;
 
-					<div class="form-group">
+    margin: 40px auto;
+}
 
-						<label>Location</label>
 
-						<input type="text" name="location" required>
+/* ============================= */
+/* TITLE */
+/* ============================= */
 
-					</div>
+.page-title {
 
-					<div class="form-group">
+    text-align: center;
 
-						<label>Disaster Type</label>
+    margin-bottom: 35px;
+}
 
-						<select name="disasterType">
+.page-title h1 {
 
-							<option>Flood</option>
+    color: #38bdf8;
 
-							<option>Cyclone</option>
+    margin-bottom: 10px;
+}
 
-							<option>Earthquake</option>
+.page-title p {
 
-							<option>Landslide</option>
+    color: #94a3b8;
 
-							<option>Drought</option>
+    line-height: 1.6;
+}
 
-						</select>
 
-					</div>
+/* ============================= */
+/* LOCATION OPTIONS */
+/* ============================= */
 
-					<div class="form-group">
+.location-section {
 
-						<label>Rainfall (mm)</label>
+    background: #111827;
 
-						<input type="number" step="0.1" name="rainfall" required>
+    border: 1px solid #1e293b;
 
-					</div>
+    border-radius: 12px;
 
-					<div class="form-group">
+    padding: 30px;
 
-						<label>Temperature (°C)</label>
+    margin-bottom: 30px;
+}
 
-						<input type="number" step="0.1" name="temperature" required>
+.location-section h2 {
 
-					</div>
+    text-align: center;
 
-					<div class="form-group">
+    color: #38bdf8;
 
-						<label>Humidity (%)</label>
+    margin-top: 0;
 
-						<input type="number" step="0.1" name="humidity" required>
+    margin-bottom: 8px;
+}
 
-					</div>
+.location-section-description {
 
-					<div class="form-group">
+    text-align: center;
 
-						<label>Wind Speed (km/h)</label>
+    color: #94a3b8;
 
-						<input type="number" step="0.1" name="windSpeed" required>
+    margin-bottom: 25px;
+}
 
-					</div>
+.location-options {
 
-					<button type="submit">
+    display: grid;
 
-						Predict Risk
+    grid-template-columns: repeat(2, 1fr);
 
-					</button>
+    gap: 20px;
+}
 
-				</form>
+.location-card {
 
-			</div>
+    background: #1e293b;
 
-		</body>
+    border: 1px solid #334155;
 
-		</html>
+    border-radius: 10px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition: 0.3s;
+}
+
+.location-card:hover {
+
+    transform: translateY(-4px);
+
+    border-color: #38bdf8;
+}
+
+.location-icon {
+
+    font-size: 38px;
+
+    margin-bottom: 12px;
+}
+
+.location-card h3 {
+
+    color: #7dd3fc;
+
+    margin-bottom: 10px;
+}
+
+.location-card p {
+
+    color: #cbd5e1;
+
+    line-height: 1.6;
+
+    min-height: 55px;
+}
+
+.location-button {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 12px 20px;
+
+    background: #2563eb;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+}
+
+.location-button:hover {
+
+    background: #1d4ed8;
+}
+
+
+/* ============================= */
+/* DIVIDER */
+/* ============================= */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    text-align: center;
+
+    color: #64748b;
+
+    margin: 30px 0;
+}
+
+.divider::before,
+.divider::after {
+
+    content: "";
+
+    flex: 1;
+
+    border-bottom: 1px solid #334155;
+}
+
+.divider span {
+
+    padding: 0 15px;
+}
+
+
+/* ============================= */
+/* MANUAL PREDICTION FORM */
+/* ============================= */
+
+.container {
+
+    width: 100%;
+
+    background: #1e293b;
+
+    padding: 40px;
+
+    border-radius: 12px;
+
+    border: 1px solid #334155;
+}
+
+.container h2 {
+
+    text-align: center;
+
+    margin-top: 0;
+
+    margin-bottom: 10px;
+
+    color: #38bdf8;
+}
+
+.manual-description {
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    margin-bottom: 30px;
+}
+
+.form-group {
+
+    margin-bottom: 20px;
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #e2e8f0;
+}
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #334155;
+
+    border-radius: 6px;
+
+    background: #0f172a;
+
+    color: white;
+
+    font-size: 15px;
+}
+
+input:focus,
+select:focus {
+
+    outline: none;
+
+    border-color: #38bdf8;
+}
+
+.predict-button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    background: #2563eb;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.predict-button:hover {
+
+    background: #1d4ed8;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media(max-width: 700px) {
+
+    .navbar {
+
+        padding: 18px 20px;
+    }
+
+    .location-options {
+
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+
+        padding: 25px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================= -->
+<!-- NAVBAR -->
+<!-- ============================= -->
+
+<div class="navbar">
+
+    <div class="logo">
+
+        DisasterGuard <span>AI</span>
+
+    </div>
+
+    <a href="<%=request.getContextPath()%>/dashboard.jsp"
+       class="back-button">
+
+        Dashboard
+
+    </a>
+
+</div>
+
+
+<div class="page-container">
+
+
+    <!-- ============================= -->
+    <!-- PAGE TITLE -->
+    <!-- ============================= -->
+
+    <div class="page-title">
+
+        <h1>
+            AI Disaster Risk Prediction
+        </h1>
+
+        <p>
+            Analyse disaster and travel risk using
+            your current location, a selected location
+            on the map, or manual environmental data.
+        </p>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- LOCATION BASED PREDICTION -->
+    <!-- ============================= -->
+
+    <div class="location-section">
+
+        <h2>
+            Location-Based Risk Analysis
+        </h2>
+
+        <p class="location-section-description">
+            Choose how you want DisasterGuard AI
+            to analyse the location.
+        </p>
+
+
+        <div class="location-options">
+
+
+            <!-- CURRENT LOCATION -->
+
+            <div class="location-card">
+
+                <div class="location-icon">
+                    📍
+                </div>
+
+                <h3>
+                    Use My Current Location
+                </h3>
+
+                <p>
+                    Detect your GPS location automatically
+                    and analyse live weather,
+                    disaster risk and road safety.
+                </p>
+
+                <a href="<%=request.getContextPath()%>/live-risk-location.jsp"
+                   class="location-button">
+
+                    Use Current Location
+
+                </a>
+
+            </div>
+
+
+            <!-- MAP LOCATION -->
+
+            <div class="location-card">
+
+                <div class="location-icon">
+                    🗺️
+                </div>
+
+                <h3>
+                    Select Location on Map
+                </h3>
+
+                <p>
+                    Select any location on the interactive
+                    map and analyse weather and disaster risk
+                    for that point.
+                </p>
+
+                <a href="<%=request.getContextPath()%>/map-weather.jsp"
+                   class="location-button">
+
+                    Open Interactive Map
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- DIVIDER -->
+    <!-- ============================= -->
+
+    <div class="divider">
+
+        <span>
+            OR ENTER DATA MANUALLY
+        </span>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- EXISTING MANUAL PREDICTION -->
+    <!-- ============================= -->
+
+    <div class="container">
+
+        <h2>
+            Manual Risk Prediction
+        </h2>
+
+        <p class="manual-description">
+            Enter environmental values manually
+            to calculate disaster risk.
+        </p>
+
+
+        <!-- IMPORTANT:
+             Existing PredictionServlet flow
+             remains unchanged.
+        -->
+
+        <form action="PredictionServlet"
+              method="post">
+
+
+            <div class="form-group">
+
+                <label>
+                    Location
+                </label>
+
+                <input type="text"
+                       name="location"
+                       required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Disaster Type
+                </label>
+
+                <select name="disasterType">
+
+                    <option>
+                        Flood
+                    </option>
+
+                    <option>
+                        Cyclone
+                    </option>
+
+                    <option>
+                        Earthquake
+                    </option>
+
+                    <option>
+                        Landslide
+                    </option>
+
+                    <option>
+                        Drought
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Rainfall (mm)
+                </label>
+
+                <input type="number"
+                       step="0.1"
+                       name="rainfall"
+                       required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Temperature (°C)
+                </label>
+
+                <input type="number"
+                       step="0.1"
+                       name="temperature"
+                       required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Humidity (%)
+                </label>
+
+                <input type="number"
+                       step="0.1"
+                       name="humidity"
+                       required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Wind Speed (km/h)
+                </label>
+
+                <input type="number"
+                       step="0.1"
+                       name="windSpeed"
+                       required>
+
+            </div>
+
+
+            <button type="submit"
+                    class="predict-button">
+
+                Predict Risk
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

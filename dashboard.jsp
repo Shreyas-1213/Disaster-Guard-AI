@@ -381,12 +381,10 @@ body {
                 important risk information in real time.
             </p>
 
-            <a href="#"
-               class="card-button">
-
-                View Monitoring
-
-            </a>
+          <a href="<%= request.getContextPath() %>/DisasterIncidentServlet"
+   class="card-button">
+    View Monitoring
+</a>
 
         </div>
 
@@ -405,13 +403,14 @@ body {
                 preparedness resources.
             </p>
 
-            <a href="#"
-               class="card-button">
+            
+<a href="<%=request.getContextPath()%>/emergency-support.jsp"
+   class="card-button">
 
-                Get Support
+    Get Support
 
-            </a>
-
+</a>
+            
         </div>
 
 
@@ -657,6 +656,17 @@ function activateSOS() {
 }
 
 </script>
+
+<a href="<%= request.getContextPath() %>/AIDisasterAssistantServlet"
+   title="AI Assistant"
+   aria-label="Open AI Assistant"
+   style="position:fixed;right:20px;bottom:20px;width:52px;height:52px;
+          border-radius:50%;background:#1764d8;color:white;
+          display:flex;align-items:center;justify-content:center;
+          font-size:25px;text-decoration:none;
+          box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:9999;">
+    🤖
+</a>
 
 </body>
 </html>
